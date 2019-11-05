@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+	<!-- <section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Product Details Page</h1>
+					<nav class="d-flex align-items-center">
+						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
+						<a href="single-product.html">product-details</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>-->
+	<!-- End Banner Area -->
+
+	<!--================Single Product Area =================-->
+	<div class="product_image_area">
+		<div class="container">
+			<div class="row s_product_inner">
+				<div class="col-lg-6">
+					<div class="s_Product_carousel">
+						<div class="single-prd-item">
+							<img class="img-fluid" src="{{ book.thumbnail.url }}" alt="">
+						</div>
+						<div class="single-prd-item">
+							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
+						</div>
+						<div class="single-prd-item">
+							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-5 offset-lg-1">
+					<div class="s_product_text">
+						<h3>{{ book.title }}</h3>
+						<h2>{{ book.writer }}</h2>
+						<ul class="list">
+                        <span>Categories</span>
+							{% for cat in book.categories.all %}
+                            <li><a class="active" href="{% url 'category_search' cat.id %}"> {{ cat }} </a></li>
+                             {% endfor %}
+						</ul>
+						<p>{{ book.short_description }}</p>
+
+                           <div class="card_area d-flex align-items-center">
+                        {% if book.get_previous_by_timestamp %}
+							<a class="icon_btn" href="{% url 'single-book' book.get_previous_by_timestamp.id %}"  >  Prev</a>
+						{% endif %}
+
+
+                        {% if book.get_next_by_timestamp %}
+							<a class="icon_btn" href="{% url 'single-book' book.get_next_by_timestamp.id %}"  >  Next</a>
+						{% endif %}
+                           </div>
+
+                    <div class="container">
+				        <div class="row justify-content-center">
+					        <div class=" text-center">
+						        <div class="section-title">
+							<h1>Same genre books</h1>
+							<p>You might be also interested in...</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<!-- single product -->
+					 {% for obj in  queryset %}
+                         {% for cat in book.categories.all %}
+                            {% if cat in obj.categories.all and obj.id != book.id %}
+
+                    <div class="col-lg-3 col-md-6">
+						<div class="single-product">
+							<img class="img-fluid" src="{{ obj.thumbnail.url }}" alt="">
+							<div class="product-details">
+								<h6>{{ obj.title }}</h6>
+                                <div class="price">
+                                    {% for cat in obj.categories.all %}
+									<h6>{{ cat}}</h6>
+
+                                    {% endfor %}
+								</div>
+								<div class="prd-bottom">
+
+
+									<a href="{% url 'single-book' obj.id %}" class="social-info">
+										<span class="lnr lnr-move"></span>
+										<p class="hover-text">view more</p>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+                             {% endif %}
+                {% endfor %}
+{% endfor %}
+
+
+
+
+
+
+				</div>
+			</div>
+
+{#                             <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row">#}
+{#                                {% if book.get_previous_in_order %}#}
+{#                                    <a  href="{% url 'single-book' book.get_previous_in_order.id %}"#}
+{#                                       class="primary-btn">#}
+{#                                        <div class="icon prev"><i class="fa fa-angle-left"></i></div>#}
+{#                                        <div class="text"><strong class="text-primary">Previous Post</strong>#}
+{#                                            <h5>{{  book.get_previous_in_order.title }}</h5>#}
+{#                                        </div>#}
+{#                                    </a>#}
+{#                                {% else %}#}
+{#                                    <p></p>#}
+{#                                {% endif %}#}
+{#                                {% if book.get_next_in_order %}#}
+{#                                    <a href="{% url 'post-detail' book.get_next_in_order.id %}"#}
+{#                                       class="next-post text-right d-flex align-items-center justify-content-end">#}
+{#                                        <div class="text"><strong class="text-primary">Next Post</strong>#}
+{#                                            <h5>{{book.get_next_in_order.title }}</h5>#}
+{#                                        </div>#}
+{#                                        <div class="icon next"><i class="fa fa-angle-right"> </i></div>#}
+{#                                    </a>#}
+{#                                {% endif %}#}
+{#                            </div>#}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--================End Single Product Area =================-->
+
+	<!--================Product Description Area =================-->
+	<section class="product_description_area">
+		<div class="container">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Description</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                                 aria-selected="false">Comments</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="home" aria-selected="true">Reviews</a>
+                            </li>
+                        </ul>
+
+            <div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="home-tab">
+                                <h2> www.goodreads.com rating for the book {{book.title}}:</h2>
+
+
+                                <h3> Ratings count: {{ratings_count}}</h3>
+                                <h3> Reviews count: {{reviews_count}}</h3>
+                                <h3> Text reviews count: {{text_reviews_count}}</h3>
+                                <h3> Work ratings count: {{work_ratings_count}}</h3>
+                                <h3> Average rating: {{average_rating}}</h3>
+
+				</div>
+
+            <div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+					<p>{{ book.long_description }}
+
+				</div>
+
+
+				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+					<div class="row">
+                        {% for comm in book.comment_set.all %}
+						<div class="col-lg-6">
+							<div class="comment_list">
+								<div class="review_item">
+									<div class="media">
+										<div class="d-flex">
+											<img src="img/product/review-1.png" alt="">
+										</div>
+										<div class="media-body">
+											<h4>{{ comm.user_name }}</h4>
+											<h5>{{ comm.create_time }}</h5>
+										</div>
+									</div>
+									<p>{{ comm.comment }}</p>
+								</div>
+
+
+							</div>
+						</div>
+                        {% endfor %}
+
+						<div class="col-lg-6">
+							<div class="review_box">
+								<h4>Post a comment</h4>
+								<form class="commenting-form" action="{% url 'new-comment' book.id %}" method="post" id="contactForm" novalidate="novalidate">
+									{% csrf_token %}
+                                    <div class="col-md-12">
+										<div class="form-group">
+											<input type="text" class="form-control" id="username" name="username" placeholder="Your Full name">
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<input type="email" class="form-control" id="useremail" name="useremail" placeholder="Email Address(will not be published)">
+										</div>
+									</div>
+
+									<div class="col-md-12">
+										<div class="form-group">
+											<textarea class="form-control" name="usercomment" id="usercomment" rows="1" placeholder="Message"></textarea>
+										</div>
+									</div>
+									<div class="col-md-12 text-right">
+										<button type="submit" value="submit" class="btn primary-btn">Submit Now</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+	<!--================End Product Description Area =================-->
+
+
+
+
+	{% endblock content %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+
+	</section>
+	<!-- End Banner Area -->
+    <br>
+    <div class="contact_us_form" style="margin-left: 30%">
+        <h2 class="title">Contact Us</h2>
+        <br />
+        <form action="." method="post" name="feedback" class="form-horizontal">
+            {% csrf_token %}
+            <div class="form-group ">
+                <label for="name" class="col-sm-2 control-label" style="color: cornflowerblue">Name</label>
+                <div class="col-sm-6">
+                    <input type="text" name="name" class="form-control"/>
+                    <p class="help-block" style="color: indianred">*Required</p>
+                </div>
+            </div>
+            <div class="visualclear"></div>
+            <div class="form-group ">
+                <label for="email" class="col-sm-2 control-label" style="color: cornflowerblue">E-mail Address</label>
+                <div class="col-sm-6">
+                    <input class="form-control" type="text" name="email"/>
+                    <div class="visualclear"></div>
+                    <p class="help-block" style="color: indianred">*Required</p>
+                </div>
+            </div>
+            <br />
+            <div class="visualclear"></div>
+            <div class="form-group">
+                <label for="subject"  class="col-sm-2 control-label" style="color: cornflowerblue">Subject</label>
+                 <div class="col-sm-6">
+                    <input class="form-control" type="text" name="subject"/>
+                    <div class="visualclear"></div>
+                    <p class="help-block" style="color: indianred">*Required.</p>
+                </div>
+            </div>
+            <br />
+            <div class="form-group ">
+                <label for="description" class="col-sm-2 control-label" style="color: cornflowerblue">Description</label>
+                 <div class="col-sm-6">
+{#                    <input class="form-control" type="text" name="description"/>#}
+                     <textarea class="form-control" type="text" name="description"></textarea>
+                    <div class="visualclear"></div>
+                    <p class="help-block" style="color: indianred">*Required.</p>
+                </div>
+            </div>
+
+            <div class="row" style="margin-bottom: 50px">
+                <div class="col-sm-8">
+                    <input class="btn btn-primary pull-right" type="submit" value="Send Feedback"/>
+                </div>
+            </div>
+        </form>
+    {% if success == False%}
+        <p style="margin-left: 10%; color: red; font-size: x-large">{{ error_msg }}</p>
+    {% endif %}
+    </div>
+
+{% endblock %}
